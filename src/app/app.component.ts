@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'angular-project';
+  public tabSelected = "recipe-button";
+
+  public onheaderButtonClicked(buttonPressed:"recipe-button"|"shopping-list-button"):void{
+    this.tabSelected= buttonPressed;
+  }
+
 }
+
