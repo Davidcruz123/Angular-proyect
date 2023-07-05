@@ -1,16 +1,19 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Ingredient } from '../../../shared/models/ingredient.model';
+import { ShoppingListService } from 'src/app/shared/services/shopping-list.service';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
 })
 export class ShoppingEditComponent {
-  @Output() onAddElment = new EventEmitter<Ingredient>();
+  constructor(private shoppingListService : ShoppingListService) {
 
+  }
   public AddElement(nameInput:HTMLInputElement,amountInput:HTMLInputElement):void{
-    this.onAddElment.emit( new Ingredient(nameInput.value,+amountInput.value));
+      this.shoppingListService.addIngredient(new Ingredient(nameInput.value,+amountInput.value));
       nameInput.value = "";
       amountInput.value= "0";
   }
+
 }
