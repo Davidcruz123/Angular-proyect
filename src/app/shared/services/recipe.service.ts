@@ -15,6 +15,13 @@ export class RecipeService {
   get recipes():Recipe[] {
     return [...this._recipeList];
   }
+
+  public getRecipeById(id:string):Recipe {
+     const recipes = this._recipeList.filter(recipe=>{
+      return recipe.id == id
+    })
+    return recipes[0];
+  }
   
 
   constructor() { }

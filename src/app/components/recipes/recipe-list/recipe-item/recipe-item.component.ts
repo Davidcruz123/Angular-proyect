@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Recipe } from '../../../../shared/models/recipes.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-item',
@@ -8,10 +9,10 @@ import { RecipeService } from 'src/app/shared/services/recipe.service';
 })
 export class RecipeItemComponent {
   @Input() recipe:Recipe;
-  constructor(private recipeService:RecipeService) {
+  constructor(private recipeService:RecipeService,private router:Router, private route: ActivatedRoute) {
   }
   
   public recipeSelected():void{
-    this.recipeService.recipeSelected.emit(this.recipe);
+    this.router.navigate([this.recipe.id], {relativeTo:this.route});
   }
 }
