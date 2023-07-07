@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Recipe } from '../../../../shared/models/recipes.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -1,5 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { Ingredient } from '../models/ingredient.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +8,8 @@ import { Ingredient } from '../models/ingredient.model';
 export class ShoppingListService {
   private _ingredients: Ingredient[] = [
     // new Ingredient("Apples",10),
-    // new Ingredient("Oranges",80)
   ];
-  public ingredientsUpdated = new EventEmitter<Ingredient[]>();
+  public ingredientsUpdated = new Subject<Ingredient[]>();
 
   get ingredients() {
     return [...this._ingredients];
@@ -18,11 +18,11 @@ export class ShoppingListService {
 
   public addIngredient(ingredient:Ingredient):void {
     this._ingredients.push(ingredient);
-    this.ingredientsUpdated.emit( [...this._ingredients] );
+    this.ingredientsUpdated.next( [...this._ingredients] );
   }
   public addIngredients(ingredients:Ingredient[]):void { 
     //method created to avoid sending several messages when several recipes are added.
     this._ingredients.push(...ingredients);
-    this.ingredientsUpdated.emit( [...this._ingredients] );
+    this.ingredientsUpdated.next( [...this._ingredients] );
   }
 }
