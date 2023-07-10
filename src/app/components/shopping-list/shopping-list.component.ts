@@ -6,8 +6,9 @@ import { ShoppingListService } from 'src/app/shared/services/shopping-list.servi
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
+  styleUrls: ["./shopping-list.component.less"]
 })
-export class ShoppingListComponent implements OnInit,OnDestroy {
+export class ShoppingListComponent implements OnInit, OnDestroy {
   public ingredients: Ingredient[];
   private ingredientsUpdatedSubs: Subscription;
 
@@ -18,6 +19,13 @@ export class ShoppingListComponent implements OnInit,OnDestroy {
     this.ingredients = this.shoppingListService.ingredients;
     this.ingredientsUpdatedSubs = this.shoppingListService.ingredientsUpdated.subscribe((ingredients) => this.ingredients = ingredients);
   }
+  public editItem(ingredientIndex:number): void {
+    this.shoppingListService.selectIngredient(ingredientIndex);
+  }
+  public deleteIngredient(ingredientIndex:number):void {
+    this.shoppingListService.deleteIngredient(ingredientIndex);
+  }
+
   ngOnDestroy(): void {
     this.ingredientsUpdatedSubs.unsubscribe();
   }
