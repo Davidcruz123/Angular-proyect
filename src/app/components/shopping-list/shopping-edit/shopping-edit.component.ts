@@ -6,11 +6,6 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
-  styles:[`
-    .btn{
-      margin:5px
-    }
-  `]
 })
 export class ShoppingEditComponent implements OnInit {
   @ViewChild("formRefence") form:NgForm;

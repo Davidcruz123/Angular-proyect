@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent, RecipeDetailComponent, RecipeItemComponent, RecipeListComponent,
    RecipesComponent, ShoppingEditComponent, ShoppingListComponent } from './components';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { AppRoutingModule } from './shared/modules';
 import { RecipeEditComponent } from './components/recipes/recipe-edit/recipe-edit.component';
@@ -28,7 +28,8 @@ import { RecipeEditComponent } from './components/recipes/recipe-edit/recipe-edi
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
