@@ -9,8 +9,5 @@ import { Recipe } from '../../shared/models/recipes.model';
 })
 export class RecipesComponent   {
   title = 'angular-project';
-  // public recipeSelected:Recipe ;
   
-
-
 }

@@ -3,8 +3,10 @@
         <form [formGroup]="recipeEditForm" (ngSubmit)="submitForm()" >
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-success" type="submit"> Save </button>
-                    <button class="btn btn-danger" type="button"> Cancel </button>
+                    <button class="btn btn-success" type="submit"
+                     [disabled]="!recipeEditForm.valid || !isFormModified"
+                     > Save </button>
+                    <button class="btn btn-danger" type="button" (click)="onCancel()"> Cancel </button>
                 </div>
             </div>
             <div class="row">
@@ -45,7 +47,9 @@
                     <div class="row" *ngFor="let ingredientControl of getControls(); let i=index" [formGroupName]="i" >
                         <div class="col-xs-8"><input type="text" class="form-control" formControlName="name" ></div>
                         <div class="col-xs-2"><input type="number" class="form-control" formControlName="amount" ></div>
-                        <div class="col-xs-2"> <button class="btn btn-danger" type="button" (click)="deleteIngredient(i)">X</button> </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-danger" type="button" [disabled]="recipeEditForm.get('ingredients').length==1" (click)="deleteIngredient(i)">X</button>
+                        </div>
                     </div>
                 </div>
             </div>
