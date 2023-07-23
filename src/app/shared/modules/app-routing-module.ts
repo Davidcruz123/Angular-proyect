@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { RecipeDetailComponent, RecipeEditComponent, RecipesComponent, ShoppingListComponent } from "src/app/components";
+import { RecipesResolverService } from "../services/recipe-resolver.service";
 
 
 export const appRoutes:Routes = [
@@ -10,8 +11,8 @@ export const appRoutes:Routes = [
             recipeSelected:false
         }},
         {path:"new", component:RecipeEditComponent}, // first new path and then the id, otherwise it would take 'new' as Id
-        {path: ":id", component:RecipeDetailComponent},
-        {path:":id/edit", component:RecipeEditComponent},
+        {path: ":id", component:RecipeDetailComponent,resolve:[RecipesResolverService]},
+        {path:":id/edit", component:RecipeEditComponent,resolve:[RecipesResolverService]},
     ]},
     {path:"shopping-list", component:ShoppingListComponent}
 ]

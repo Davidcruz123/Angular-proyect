@@ -16,7 +16,7 @@ export class HeaderComponent {
     this.dataStorageService.saveRecipes();
   }
   public fetchData():void {
-    this.dataStorageService.fetchRecipes();
+    this.dataStorageService.fetchRecipes().subscribe();
   }
 
 }

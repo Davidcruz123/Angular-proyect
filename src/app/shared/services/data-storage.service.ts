@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Recipe } from '../models/recipes.model';
 import { HttpClient } from '@angular/common/http';
 import { RecipeService } from './recipe.service';
@@ -14,16 +14,12 @@ export class DataStorageService {
 
   constructor(private http: HttpClient, private recipeService: RecipeService) { }
 
-  public fetchRecipes():void {
-    this.http.get<Recipe[]>(DATABASE_URL)
-    .subscribe({
-      next: recipes=> {
-        this.recipeService.recipes = recipes;
-      },
-      error: error=> {
-        console.log(error);
-      }
-    });
+  public fetchRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(DATABASE_URL)
+    .pipe(tap(recipes=> {
+      console.log("tap")
+      this.recipeService.recipes = recipes;
+    }));
   }
   public saveRecipes():void  {
     const recipes= this.recipeService.recipes;
