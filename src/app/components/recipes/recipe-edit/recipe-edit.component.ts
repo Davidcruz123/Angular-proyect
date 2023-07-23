@@ -6,12 +6,7 @@ import { RecipeService } from 'src/app/shared/services/recipe.service';
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styles: [`
-  .reverse-elements {
-    display:flex;
-    flex-direction:column-reverse;
-  }
-  `]
+  styleUrls: ['recipe-edit.component.less'],
 })
 export class RecipeEditComponent implements OnInit {
   public recipeEditForm: FormGroup;
@@ -90,15 +85,14 @@ export class RecipeEditComponent implements OnInit {
     // Todo: add async validator to valid if image exists
     if (this.recipeId) { // is edit mode
       this.recipeService.updateRecipe(this.recipeId, this.recipeEditForm.value);
-      this.router.navigate(["recipes", this.recipeId]);
     } else {
       this.recipeService.addRecipe(this.recipeEditForm.value);
-      this.router.navigate(["recipes"]);
     }
+    this.leavePage();
   }
-  public onCancel(): void {
+  public leavePage(): void {
     if (this.recipeId) { // is edit mode
-      this.router.navigate(["recipes", this.recipeId]);
+      this.router.navigate(["../"],{relativeTo:this.route});
     } else {
       this.router.navigate(["recipes"]);
     }

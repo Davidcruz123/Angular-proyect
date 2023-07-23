@@ -6,6 +6,9 @@ import { RecipeDetailComponent, RecipeEditComponent, RecipesComponent, ShoppingL
 export const appRoutes:Routes = [
     {path:"", redirectTo:"recipes", pathMatch: 'full' },
     {path:"recipes",component:RecipesComponent, children:[
+        {path:"", component:RecipeDetailComponent, pathMatch: 'full' ,data:{
+            recipeSelected:false
+        }},
         {path:"new", component:RecipeEditComponent}, // first new path and then the id, otherwise it would take 'new' as Id
         {path: ":id", component:RecipeDetailComponent},
         {path:":id/edit", component:RecipeEditComponent},

@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Recipe } from '../../shared/models/recipes.model';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -8,6 +7,5 @@ import { Recipe } from '../../shared/models/recipes.model';
 
 })
 export class RecipesComponent   {
-  title = 'angular-project';
   
 }

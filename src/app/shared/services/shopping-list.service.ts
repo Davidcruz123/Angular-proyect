@@ -6,12 +6,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private _ingredients: Ingredient[] = [
-    new Ingredient("Rice",1),
-    new Ingredient("Beans",4),
-    new Ingredient("Potato",3),
-    new Ingredient("Sugar",1),
-  ];
+  private _ingredients: Ingredient[] = [];
   private _ingredientSelectedIndex:number;
 
   public ingredientsUpdated = new Subject<Ingredient[]>();

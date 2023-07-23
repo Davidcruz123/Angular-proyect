@@ -31,12 +31,12 @@ export class RecipeService {
     this._recipeList[arrayIndex] = Object.assign(this._recipeList[arrayIndex],data)
   }
   public addRecipe(recipe:Recipe):void { 
-    let ingredients:Ingredient[] = [];
-    recipe.ingredients.forEach(ingredient=> {
-      ingredients.push(new Ingredient(ingredient.name,ingredient.amount))
-    })
-    this._recipeList.push(new Recipe(recipe.name,recipe.description,recipe.imagePath,ingredients));
+    this._recipeList.push(new Recipe(recipe.name,recipe.description,recipe.imagePath,recipe.ingredients));// remember recipe id is generated automatically
     this.recipesUpdated.next( [...this._recipeList] );
-
+  }
+  public deleteRecipe(recipeId:string):void {
+    const arrayIndex = this._recipeList.findIndex(recipe=>recipe.id ==recipeId);
+    this._recipeList.splice(arrayIndex,1);
+    this.recipesUpdated.next( [...this._recipeList] );
   }
 }

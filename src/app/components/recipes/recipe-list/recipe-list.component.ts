@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
 })
-export class RecipeListComponent implements OnInit,OnDestroy {
+export class RecipeListComponent implements OnDestroy {
   public recipes:Recipe[] ;
   private recipesUpdatedSubscription:Subscription;
 
@@ -18,9 +18,7 @@ export class RecipeListComponent implements OnInit,OnDestroy {
     })
   }
 
-  ngOnInit(): void {
-    console.log("recipe list on init")
-  }
+
   ngOnDestroy(): void {
     this.recipesUpdatedSubscription.unsubscribe();
   }
