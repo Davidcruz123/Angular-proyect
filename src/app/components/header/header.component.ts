@@ -3,8 +3,7 @@ import { DataStorageService } from 'src/app/shared/services/data-storage.service
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   public collapsed = true;
