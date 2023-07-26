@@ -17,7 +17,6 @@ export class DataStorageService {
   public fetchRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(DATABASE_URL)
     .pipe(tap(recipes=> {
-      console.log("tap")
       this.recipeService.recipes = recipes;
     }));
   }
@@ -26,7 +25,6 @@ export class DataStorageService {
     this.http.put(DATABASE_URL,recipes)
     .subscribe({
       next:response=> {
-        console.log("recipes saved successfully")
         console.log(response)
       },
       error: error=> {
