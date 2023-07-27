@@ -8,7 +8,10 @@ import { AuthService } from 'src/app/shared';
 })
 export class AuthComponent {
 
-  isloginMode = true;
+  public isloginMode = true;
+  public isLoading = false;
+  public error:string = null;
+
 
   constructor(private authService: AuthService) {
 
@@ -21,15 +24,25 @@ export class AuthComponent {
     if (!form.valid) {
       return; //Extra validation step, user could send by using dev tools 
     }
+    const { email, password } = form.value;
+    this.isLoading=true;
     if (this.isloginMode) {
 
     } else {
-      const { email, password } = form.value;
       this.authService.signup(email, password).subscribe({
-        next: response => console.log(response),
-        error: response => console.log(response)
+        next: response => {
+          console.log(response);
+          this.isLoading=false;
+        },
+        error: response => {
+          console.log(response);
+          this.error = "An error ocurred"
+          this.isLoading=false;
+        }
       });
     }
+
+    form.reset();
 
 
 

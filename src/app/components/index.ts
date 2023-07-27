@@ -8,3 +8,5 @@ export * from "./shopping-list/shopping-list.component";
 export * from "./shopping-list/shopping-edit/shopping-edit.component";
 
 export * from "./header/header.component";
+export * from "./loading-spinner/loading-spinner.component";
+
