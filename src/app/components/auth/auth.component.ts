@@ -34,9 +34,9 @@ export class AuthComponent {
           console.log(response);
           this.isLoading=false;
         },
-        error: response => {
-          console.log(response);
-          this.error = "An error ocurred"
+        error: errorMessage => { // remember error had ben modified on pipe
+          console.log(errorMessage);
+          this.error = errorMessage;
           this.isLoading=false;
         }
       });
