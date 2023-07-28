@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { AuthResponseData, User } from '../models';
+import { Router } from '@angular/router';
 
 
 const SIGN_UP_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCwvCUOsxBX0q1Pa9S-EhKcuZ50C96tnLk";
@@ -11,9 +12,9 @@ const SIGN_IN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWi
 })
 export class AuthService {
 
-  private userSubject = new Subject<User>;
+  public userSubject = new Subject<User>;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
 
   public signup(email:string,password:string):Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(SIGN_UP_URL, {
@@ -23,7 +24,7 @@ export class AuthService {
     } )
     .pipe( catchError(this.handleError),
     tap(response => {
-      this.createNewUser(response.email,response.localId,response.idToken,+response.expiresIn);
+      this.handleAuthentication(response.email,response.localId,response.idToken,+response.expiresIn);
     })
     )
   }
@@ -36,7 +37,7 @@ export class AuthService {
     })
     .pipe( catchError(this.handleError),
     tap(response => {
-      this.createNewUser(response.email,response.localId,response.idToken,+response.expiresIn);
+      this.handleAuthentication(response.email,response.localId,response.idToken,+response.expiresIn);
     })
     )
   }
@@ -70,9 +71,10 @@ export class AuthService {
 
     return throwError(()=>new Error(errorMessage));
   }
-  private createNewUser(email:string,id:string,token:string, expirationTime:number){
+  private handleAuthentication(email:string,id:string,token:string, expirationTime:number){
     const expirationDate = new Date(new Date().getTime()+ expirationTime*1000)
     const user = new User(email,id,token,expirationDate )
     this.userSubject.next(user);
+    this.router.navigate(["recipes"]);
   }
 }
