@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared';
+import { AuthResponseData } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-auth',
@@ -25,26 +27,28 @@ export class AuthComponent {
       return; //Extra validation step, user could send by using dev tools 
     }
     const { email, password } = form.value;
+    let authObs:Observable<AuthResponseData>;
     this.isLoading=true;
     if (this.isloginMode) {
-
+      authObs = this.authService.login(email,password);
     } else {
-      this.authService.signup(email, password).subscribe({
-        next: response => {
-          console.log(response);
-          this.isLoading=false;
-        },
-        error: errorMessage => { // remember error had ben modified on pipe
-          console.log(errorMessage);
-          this.error = errorMessage;
-          this.isLoading=false;
-        }
-      });
+      authObs =this.authService.signup(email, password)
     }
+
+    authObs.subscribe({
+      next: response => {
+        console.log(response);
+        this.isLoading=false;
+      },
+      error: errorMessage => { // remember error had ben modified on pipe
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading=false;
+      }
+    })
 
     form.reset();
 
-
-
   }
+  
 }
