@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AuthResponseData } from '../models';
@@ -19,23 +19,7 @@ export class AuthService {
       password,
       returnSecureToken:true
     } )
-    .pipe( catchError(errorRes=> {
-      let errorMessage = "An unknown error ocurred";
-      if (!errorRes.error || !errorRes.error.error) {
-        return throwError(()=>new Error(errorMessage));
-      }
-      switch (errorRes.error.error.message){
-        case 'EMAIL_EXISTS':
-          errorMessage= "This email already exists."
-        case 'OPERATION_NOT_ALLOWED':
-          errorMessage = "Password sign-in is disabled for this project"
-        case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-          errorMessage = "We are sorry, you have exceeded the number of attempts available, please try again later." 
-      }
-
-      return throwError(()=>new Error(errorMessage));
-
-    }))
+    .pipe( catchError(this.handleError))
   }
 
   public login(email:string,password:string) {
@@ -44,5 +28,36 @@ export class AuthService {
       password,
       returnSecureToken:true
     })
+    .pipe( catchError(this.handleError))
+  }
+
+  private handleError(errorResp:HttpErrorResponse){
+    let errorMessage = "An unknown error ocurred";
+    if (!errorResp.error || !errorResp.error.error) {
+      return throwError(()=>new Error(errorMessage));
+    }
+    console.log(errorResp.error.error.message);
+    switch (errorResp.error.error.message){
+      case 'EMAIL_EXISTS':
+        errorMessage= "This email already exists."
+        break;
+      case 'OPERATION_NOT_ALLOWED':
+        errorMessage = "Password sign-in is disabled for this project"
+        break;
+      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+        errorMessage = "We are sorry, you have exceeded the number of attempts available, please try again later." 
+        break;
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = "There is no user record corresponding to this identifier. The user may have been deleted"
+        break;
+      case 'INVALID_PASSWORD':
+        errorMessage = "The password is invalid or the user does not have a password."
+        break;
+      case 'USER_DISABLED':
+        errorMessage = "The user account has been disabled by an administrator."
+        break;
+    }
+
+    return throwError(()=>new Error(errorMessage));
   }
 }
