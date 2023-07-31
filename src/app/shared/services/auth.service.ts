@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { AuthResponseData, User } from '../models';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ const SIGN_IN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWi
 })
 export class AuthService {
 
-  public userSubject = new Subject<User>;
+  public userSubject = new BehaviorSubject<User>(null);
 
   constructor(private http:HttpClient, private router:Router) { }
 
