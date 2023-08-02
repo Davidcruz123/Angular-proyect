@@ -13,6 +13,7 @@ const SIGN_IN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWi
 export class AuthService {
 
   public userSubject = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer:any;
 
   constructor(private http:HttpClient, private router:Router) { }
 
@@ -37,6 +38,8 @@ export class AuthService {
     const loadedUser =  new User(userData.email,userData.id,userData._token,new Date( userData._tokenExpirationDate ));
     if (loadedUser.token) {
       this.userSubject.next(loadedUser);
+      const newExpiration = new Date( userData._tokenExpirationDate ).getTime() - new Date().getTime();
+      this.autoLogout(newExpiration);
     }
   }
 
@@ -54,7 +57,15 @@ export class AuthService {
   }
   public logoug() {
     this.userSubject.next(null);
+    localStorage.removeItem('userData');
+    this.tokenExpirationTimer && clearTimeout(this.tokenExpirationTimer);
     this.router.navigate(['/auth'])
+  }
+
+  private autoLogout(expirationDuration:number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logoug();
+    }, expirationDuration);
   }
 
   private handleError(errorResp:HttpErrorResponse){
@@ -91,6 +102,7 @@ export class AuthService {
     const user = new User(email,id,token,expirationDate )
     this.userSubject.next(user);
     localStorage.setItem("userData",JSON.stringify(user));
+    this.autoLogout(expirationTime*1000);
     this.router.navigate(["recipes"]);
   }
 }
