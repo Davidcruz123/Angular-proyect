@@ -8,6 +8,7 @@ import { AppRoutingModule } from "./shared";
 import { DropdownDirective } from "./shared/directives/dropdown.directive";
 import { AuthComponent } from "./components/auth/auth.component";
 import { AuthInterceptorService } from "./shared/interceptors/auth-interceptor.service";
+import { AlertComponent } from './components/alert/alert.component';
 
 
 
@@ -25,7 +26,8 @@ import { AuthInterceptorService } from "./shared/interceptors/auth-interceptor.s
     DropdownDirective,
     RecipeEditComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

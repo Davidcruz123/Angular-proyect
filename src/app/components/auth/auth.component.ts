@@ -50,5 +50,9 @@ export class AuthComponent {
     form.reset();
 
   }
+
+  public onHandleError():void {
+    this.error = null;
+  }
   
 }
