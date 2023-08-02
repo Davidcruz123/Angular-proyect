@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -7,6 +7,7 @@ import { HeaderComponent, RecipeDetailComponent, RecipeListComponent, RecipeItem
 import { AppRoutingModule } from "./shared";
 import { DropdownDirective } from "./shared/directives/dropdown.directive";
 import { AuthComponent } from "./components/auth/auth.component";
+import { AuthInterceptorService } from "./shared/interceptors/auth-interceptor.service";
 
 
 
@@ -33,7 +34,7 @@ import { AuthComponent } from "./components/auth/auth.component";
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

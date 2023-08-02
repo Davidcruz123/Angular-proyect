@@ -16,15 +16,19 @@ export class DataStorageService {
   constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) { }
 
   public fetchRecipes(): Observable<Recipe[]> {
-    return this.authService.userSubject.pipe(take(1), //user is a behavior subject, this allows us to extract the value, even when we are not in the next statement
-     exhaustMap(user => {
-      return this.http.get<Recipe[]>(DATABASE_URL,{
-        params: new HttpParams().set('auth',user.token)
-      })
-    }),
-     tap(recipes => {
+    return this.http.get<Recipe[]>(DATABASE_URL).pipe( tap(recipes => {
       this.recipeService.recipes = recipes;
-    }))
+    })) 
+
+    // return this.authService.userSubject.pipe(take(1), //user is a behavior subject, this allows us to extract the value, even when we are not in the next statement
+    //  exhaustMap(user => {
+    //   return this.http.get<Recipe[]>(DATABASE_URL,{
+    //     params: new HttpParams().set('auth',user.token)
+    //   })
+    // }),
+    //  tap(recipes => {
+    //   this.recipeService.recipes = recipes;
+    // }))
 
   }
   public saveRecipes(): void {
