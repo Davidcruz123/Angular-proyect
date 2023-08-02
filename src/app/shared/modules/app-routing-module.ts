@@ -3,11 +3,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { RecipeDetailComponent, RecipeEditComponent, RecipesComponent, ShoppingListComponent } from "src/app/components";
 import { RecipesResolverService } from "../services/recipe-resolver.service";
 import { AuthComponent } from "src/app/components/auth/auth.component";
+import { AuthGuard } from "../guards/auth-guards.service";
 
 
 export const appRoutes:Routes = [
     {path:"", redirectTo:"recipes", pathMatch: 'full' },
-    {path:"recipes",component:RecipesComponent, children:[
+    {path:"recipes",canActivate:[AuthGuard],component:RecipesComponent, children:[
         {path:"", component:RecipeDetailComponent, pathMatch: 'full' ,data:{
             recipeSelected:false
         }},
