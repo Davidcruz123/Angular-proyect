@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.authService.userSubject.subscribe(user=> {
-      this.isAuthenticated = !!user.token;
+      this.isAuthenticated = !!user?.token;
     })
   }
   public saveData():void {
@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
   }
   public fetchData():void {
     this.dataStorageService.fetchRecipes().subscribe();
+  }
+
+  public logout():void {
+    this.authService.logoug();
   }
 
 }
